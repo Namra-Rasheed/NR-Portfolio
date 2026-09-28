@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://namrarasheed.com"),
   title: "Namra Rasheed | Software Engineer & AI Specialist",
   description: "Portfolio of Namra Rasheed, a Software Engineer specializing in AI, Machine Learning, and Quality Assurance.",
   openGraph: {
@@ -15,11 +16,20 @@ export const metadata: Metadata = {
     siteName: "Namra Rasheed Portfolio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/assets/portfolio-pic.png",
+        width: 1200,
+        height: 630,
+        alt: "Namra Rasheed - Software Engineer & AI Specialist",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Namra Rasheed | Software Engineer & AI Specialist",
     description: "Bridging theoretical machine learning with robust, scalable software solutions.",
+    images: ["/assets/portfolio-pic.png"],
   },
   alternates: {
     canonical: "https://namrarasheed.com",

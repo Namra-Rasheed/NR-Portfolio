@@ -6,12 +6,32 @@ import { Mail, Send, CheckCircle2 } from "lucide-react";
 
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In a real app, this would send data to a backend or service like Formspree
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/nimrarasheed651432@gmail.com", {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json'
+        },
+        body: formData
+      });
+      
+      if (response.ok) {
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 5000);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -82,11 +102,14 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                <input type="hidden" name="_subject" value="New Contact Message from Portfolio!" />
+                <input type="hidden" name="_template" value="box" />
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-slate-700 ">Name</label>
                   <input 
                     type="text" 
                     id="name"
+                    name="name"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-white/50  border border-slate-200  focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all text-slate-900 "
                     placeholder="John Doe"
@@ -98,6 +121,7 @@ export default function Contact() {
                   <input 
                     type="email" 
                     id="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-white/50  border border-slate-200  focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all text-slate-900 "
                     placeholder="john@example.com"
@@ -108,6 +132,7 @@ export default function Contact() {
                   <label htmlFor="message" className="text-sm font-medium text-slate-700 ">Message</label>
                   <textarea 
                     id="message"
+                    name="message"
                     required
                     rows={4}
                     className="w-full px-4 py-3 rounded-lg bg-white/50  border border-slate-200  focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all text-slate-900  resize-none"
@@ -117,10 +142,11 @@ export default function Contact() {
 
                 <button 
                   type="submit"
-                  className="w-full px-8 py-3 rounded-lg bg-teal-500 text-white font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2 group cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full px-8 py-3 rounded-lg bg-teal-500 text-white font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Send Message
-                  <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {!isSubmitting && <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
                 </button>
               </form>
             )}
