@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/assets/portfolio-pic.png",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "Namra Rasheed - Software Engineer & AI Specialist",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Namra Rasheed | Software Engineer & AI Specialist",
     description: "Bridging theoretical machine learning with robust, scalable software solutions.",
-    images: ["/assets/portfolio-pic.png"],
+    images: ["/opengraph-image.png"],
   },
   alternates: {
     canonical: "https://namrarasheed.com",
